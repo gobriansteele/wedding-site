@@ -23,6 +23,6 @@ jobs:
           mkdir -p ~/.ssh/
           echo "${{ secrets.jb_wedding_DREAMHOST_SSH_KEY }}" > ~/.ssh/jb_wedding
           sudo chmod 600 ~/.ssh/jb_wedding
-          ssh-keyscan -H "maximillan.dreamhost.com" > ~/.ssh/known_hosts
+          ssh-keyscan -H "maximillian.dreamhost.com" > ~/.ssh/known_hosts
       - name: Upload site
         run: sftp -i ~/.ssh/jb_wedding jb_wedding@maximillian.dreamhost.com <<< 'cd wedding.jbcalisota.com \n put -p ./public'
