@@ -1,0 +1,28 @@
+name: Build & Deploy Jb Wedding
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-deploy:
+    name: Build & deploy Jb Wedding
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16x'
+      - name: Install project dependencies
+        run: |
+          npm ci
+          npm run build
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.jb_wedding_DREAMHOST_SSH_KEY }}" > ~/.ssh/jb_wedding
+          sudo chmod 600 ~/.ssh/jb_wedding
+          ssh-keyscan -H "maximillan.dreamhost.com" > ~/.ssh/known_hosts
+      - name: Upload site
+        run: sftp -i ~/.ssh/jb_wedding jb_wedding@maximillian.dreamhost.com <<< 'cd wedding.jbcalisota.com \n put -p ./public'
