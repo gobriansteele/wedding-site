@@ -25,4 +25,4 @@ jobs:
           sudo chmod 600 ~/.ssh/jb_wedding
           ssh-keyscan -H "maximillian.dreamhost.com" > ~/.ssh/known_hosts
       - name: Upload site
-        run: sftp -i ~/.ssh/jb_wedding jb_wedding@maximillian.dreamhost.com <<< $'cd wedding.jbcalisota.com \n put -r public/build/'
+        run: sftp -i ~/.ssh/jb_wedding jb_wedding@maximillian.dreamhost.com <<< $'cd wedding.jbcalisota.com \n put -r public/'
